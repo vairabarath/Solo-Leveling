@@ -1,0 +1,475 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-sl-light-gray;
+  }
+  
+  body {
+    @apply bg-sl-dark text-white font-sans;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 0, 64, 0.05) 0%, transparent 50%);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-sl-blue to-sl-cyan text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-sl-gray text-white font-semibold py-3 px-6 rounded-lg border border-sl-light-gray hover:border-sl-blue transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+  
+  .btn-danger {
+    @apply bg-gradient-to-r from-sl-red to-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+  
+  .card {
+    @apply bg-sl-gray border border-sl-light-gray rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .card-glow {
+    @apply card border-sl-blue shadow-blue-500/20 hover:shadow-blue-500/40;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-sl-darker border border-sl-light-gray rounded-lg text-white placeholder-gray-400 focus:border-sl-blue focus:ring-2 focus:ring-sl-blue/20 transition-all duration-300;
+  }
+  
+  .stat-bar {
+    @apply w-full h-3 bg-sl-darker rounded-full overflow-hidden;
+  }
+  
+  .stat-fill {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+  }
+  
+  .glow-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-sl-blue to-sl-cyan;
+  }
+  
+  .quest-card {
+    @apply card hover:border-sl-blue hover:shadow-blue-500/20 transition-all duration-300 cursor-pointer;
+  }
+  
+  .quest-card.completed {
+    @apply border-sl-green shadow-green-500/20;
+  }
+  
+  .title-card {
+    @apply card hover:border-sl-purple hover:shadow-purple-500/20 transition-all duration-300 cursor-pointer;
+  }
+  
+  .title-card.owned {
+    @apply border-sl-green shadow-green-500/20;
+  }
+  
+  .title-card.equipped {
+    @apply border-sl-yellow shadow-yellow-500/40;
+  }
+  
+  .level-up-animation {
+    @apply animate-level-up;
+  }
+  
+  .stat-gain-animation {
+    @apply animate-stat-gain;
+  }
+  
+  .quest-complete-animation {
+    @apply animate-quest-complete;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 0 20px currentColor;
+  }
+  
+  .text-shadow-xl {
+    text-shadow: 0 0 30px currentColor;
+  }
+  
+  .bg-pattern {
+    background-image: 
+      linear-gradient(45deg, rgba(0, 212, 255, 0.1) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(0, 212, 255, 0.1) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(0, 212, 255, 0.1) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(0, 212, 255, 0.1) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-sl-darker;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-sl-light-gray rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-sl-blue;
+}
+
+/* Loading animations */
+.loading-dots {
+  display: inline-block;
+}
+
+.loading-dots::after {
+  content: '';
+  animation: loading-dots 1.5s infinite;
+}
+
+@keyframes loading-dots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
+}
+
+/* Solo Leveling specific animations */
+@keyframes system-activation {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.8) rotateY(180deg); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1) rotateY(0deg); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1) rotateY(0deg); 
+  }
+}
+
+.system-activation {
+  animation: system-activation 1s ease-out;
+}
+
+/* Hunter System Animations */
+@keyframes hunter-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+  50% { 
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor;
+  }
+}
+
+.hunter-glow {
+  animation: hunter-glow 2s ease-in-out infinite;
+}
+
+/* Stat Gain Animation */
+@keyframes stat-gain {
+  0% { 
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: translateY(-10px) scale(1.1);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: translateY(-20px) scale(1);
+    opacity: 0;
+  }
+}
+
+.stat-gain-animation {
+  animation: stat-gain 0.8s ease-out forwards;
+}
+
+/* Level Up Animation */
+@keyframes level-up {
+  0% { 
+    transform: scale(0.8) rotateY(0deg);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.2) rotateY(180deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotateY(360deg);
+    opacity: 1;
+  }
+}
+
+.level-up-animation {
+  animation: level-up 1.2s ease-out;
+}
+
+/* Quest Complete Animation */
+@keyframes quest-complete {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.quest-complete-animation {
+  animation: quest-complete 0.6s ease-out;
+}
+
+/* Title Unlock Animation */
+@keyframes title-unlock {
+  0% { 
+    transform: scale(0.5) rotateY(0deg);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.1) rotateY(180deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotateY(360deg);
+    opacity: 1;
+  }
+}
+
+.title-unlock-animation {
+  animation: title-unlock 1s ease-out;
+}
+
+/* Power Surge Animation */
+@keyframes power-surge {
+  0% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  25% { 
+    transform: scale(1.05);
+    filter: brightness(1.5);
+  }
+  50% { 
+    transform: scale(1.1);
+    filter: brightness(2);
+  }
+  75% { 
+    transform: scale(1.05);
+    filter: brightness(1.5);
+  }
+  100% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.power-surge {
+  animation: power-surge 0.8s ease-out;
+}
+
+/* Hunter Aura Animation */
+@keyframes hunter-aura {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.2);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), 0 0 60px rgba(0, 212, 255, 0.3);
+  }
+}
+
+.hunter-aura {
+  animation: hunter-aura 3s ease-in-out infinite;
+}
+
+/* Stat Bar Fill Animation */
+@keyframes stat-fill {
+  0% { 
+    width: 0%;
+  }
+  100% { 
+    width: var(--target-width);
+  }
+}
+
+.stat-fill-animated {
+  animation: stat-fill 1.5s ease-out forwards;
+}
+
+/* Quest Card Hover Effects */
+.quest-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+}
+
+/* Title Card Rarity Effects */
+.title-card.rare {
+  border: 2px solid #3B82F6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.title-card.epic {
+  border: 2px solid #8B5CF6;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.title-card.legendary {
+  border: 2px solid #F59E0B;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+  animation: hunter-glow 2s ease-in-out infinite;
+}
+
+/* Level Up Text Effect */
+@keyframes level-up-text {
+  0% { 
+    opacity: 0;
+    transform: translateY(20px) scale(0.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateY(-30px) scale(1);
+  }
+}
+
+.level-up-text {
+  animation: level-up-text 2s ease-out forwards;
+}
+
+/* Quest Complete Sweep */
+@keyframes quest-sweep {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.quest-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 64, 0.5), transparent);
+  animation: quest-sweep 1s ease-out;
+  pointer-events: none;
+}
+
+/* Hunter Rank Glow */
+@keyframes rank-glow {
+  0%, 100% { 
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  50% { 
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+  }
+}
+
+.rank-glow {
+  animation: rank-glow 2s ease-in-out infinite;
+}
+
+/* Stat Increase Effect */
+@keyframes stat-increase {
+  0% { 
+    transform: scale(1);
+    color: currentColor;
+  }
+  50% { 
+    transform: scale(1.2);
+    color: #00ff40;
+  }
+  100% { 
+    transform: scale(1);
+    color: currentColor;
+  }
+}
+
+.stat-increase {
+  animation: stat-increase 0.6s ease-out;
+}
+
+/* Quest completion effects */
+.quest-complete-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.quest-complete-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 64, 0.3), transparent);
+  animation: quest-complete-sweep 0.8s ease-out;
+}
+
+@keyframes quest-complete-sweep {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Level up effects */
+.level-up-effect {
+  position: relative;
+}
+
+.level-up-effect::after {
+  content: 'LEVEL UP!';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffd700;
+  text-shadow: 0 0 20px #ffd700;
+  animation: level-up-text 1s ease-out;
+  pointer-events: none;
+}
+
+@keyframes level-up-text {
+  0% { 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.5); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: translate(-50%, -50%) scale(1.2); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(1); 
+  }
+}
