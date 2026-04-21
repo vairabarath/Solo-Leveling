@@ -85,7 +85,7 @@ const Onboarding = () => {
       // Validate that all required fields are present
       const requiredFields = [
         'pushUpCapacity', 'squatCapacity', 'runningCapacity', 'plankCapacity',
-        'focusCapacity', 'learningLevel', 'codingLevel',
+        'focusCapacity', 'learningLevel', 'studyHabits',
         'dailyTimeAvailable', 'activityLevel', 'meditationLevel'
       ]
 
@@ -401,13 +401,13 @@ const MentalAssessmentStep = ({ data, onChange, onNext, onPrev }) => {
       ]
     },
     {
-      field: 'codingLevel',
-      question: 'What is your programming experience?',
+      field: 'studyHabits',
+      question: 'How dedicated are you to self-development?',
       options: [
-        { value: 'none', label: 'No programming experience' },
-        { value: 'basic', label: 'Basic - simple scripts' },
-        { value: 'intermediate', label: 'Intermediate - can build applications' },
-        { value: 'advanced', label: 'Advanced - complex systems' }
+        { value: 'casual', label: 'Casual - rarely study or learn' },
+        { value: 'occasional', label: 'Occasional - a few times per week' },
+        { value: 'regular', label: 'Regular - dedicated daily learner' },
+        { value: 'intensive', label: 'Intensive - 2+ hours of deep study daily' }
       ]
     }
   ]

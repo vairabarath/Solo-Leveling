@@ -15,7 +15,7 @@ const AllQuests = () => {
     { value: 'cardio', label: 'Cardio' },
     { value: 'mental', label: 'Mental' },
     { value: 'wellness', label: 'Wellness' },
-    { value: 'career', label: 'Career' }
+    { value: 'nutrition', label: 'Nutrition' }
   ]
 
   useEffect(() => {

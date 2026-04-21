@@ -29,7 +29,7 @@ const titleSchema = new mongoose.Schema({
   },
   requirementCategory: {
     type: String,
-    enum: ['fitness', 'cardio', 'mental', 'wellness', 'career', 'all'],
+    enum: ['fitness', 'cardio', 'mental', 'wellness', 'nutrition', 'all'],
     default: null
   },
   

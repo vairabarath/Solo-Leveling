@@ -13,7 +13,7 @@ const questSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Quest category is required'],
-    enum: ['fitness', 'cardio', 'mental', 'wellness', 'career']
+    enum: ['fitness', 'cardio', 'mental', 'wellness', 'nutrition']
   },
   difficulty: {
     type: String,

@@ -43,15 +43,14 @@ const checkTitleRequirement = async (user, title) => {
     case "level":
       return user.level >= title.requirementValue;
 
-    case "category":
-      const categoryQuests = await CompletedQuest.countDocuments({
-        userId: user._id,
-        questId: { $exists: true },
-      }).populate("questId", "category");
-
-      // This is a simplified check - in a real implementation,
-      // you'd need to filter by category properly
-      return categoryQuests >= title.requirementValue;
+    case "category": {
+      const completedDocs = await CompletedQuest.find({ userId: user._id })
+        .populate("questId", "category");
+      const count = completedDocs.filter(
+        (cq) => cq.questId && cq.questId.category === title.requirementCategory
+      ).length;
+      return count >= title.requirementValue;
+    }
 
     case "stat":
       // Check if user has required stat values
@@ -128,15 +127,18 @@ const getTitleProgress = async (user, title) => {
         percentage: Math.round((user.level / title.requirementValue) * 100),
       };
 
-    case "category":
-      const categoryQuests = await CompletedQuest.countDocuments({
-        userId: user._id,
-      });
+    case "category": {
+      const completedDocs = await CompletedQuest.find({ userId: user._id })
+        .populate("questId", "category");
+      const count = completedDocs.filter(
+        (cq) => cq.questId && cq.questId.category === title.requirementCategory
+      ).length;
       return {
-        current: categoryQuests,
+        current: count,
         required: title.requirementValue,
-        percentage: Math.round((categoryQuests / title.requirementValue) * 100),
+        percentage: Math.min(100, Math.round((count / title.requirementValue) * 100)),
       };
+    }
 
     case "stat":
       const statValue = user[title.requirementCategory] || 0;

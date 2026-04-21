@@ -21,7 +21,7 @@ import {
 const QuestDetail = () => {
   const { id } = useParams()
   const { getQuestById, completeQuest, currentQuest, loading } = useQuests()
-  const { updateStats } = useStats()
+  const { updateStats, getCurrentStats } = useStats()
   const [showCompleteModal, setShowCompleteModal] = useState(false)
 
   useEffect(() => {
@@ -33,12 +33,13 @@ const QuestDetail = () => {
   const handleComplete = async () => {
     try {
       const result = await completeQuest(id)
-      
-      if (result.data?.updatedUser) {
-        updateStats(result.data.updatedUser)
+
+      if (result?.updatedUser) {
+        updateStats(result.updatedUser)
       }
-      
+
       setShowCompleteModal(false)
+      getCurrentStats()
     } catch (error) {
       console.error('Failed to complete quest:', error)
     }
@@ -50,7 +51,7 @@ const QuestDetail = () => {
       case 'cardio': return <Zap className="w-5 h-5" />
       case 'mental': return <Brain className="w-5 h-5" />
       case 'wellness': return <Heart className="w-5 h-5" />
-      case 'career': return <Target className="w-5 h-5" />
+      case 'nutrition': return <Heart className="w-5 h-5" />
       default: return <Target className="w-5 h-5" />
     }
   }
@@ -61,7 +62,7 @@ const QuestDetail = () => {
       case 'cardio': return 'text-sl-blue'
       case 'mental': return 'text-sl-purple'
       case 'wellness': return 'text-sl-green'
-      case 'career': return 'text-sl-yellow'
+      case 'nutrition': return 'text-sl-orange'
       default: return 'text-gray-400'
     }
   }

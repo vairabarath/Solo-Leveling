@@ -64,9 +64,9 @@ const validateAssessment = [
   body('assessmentData.learningLevel')
     .isIn(['beginner', 'occasional', 'regular', 'advanced'])
     .withMessage('Invalid learning level value'),
-  body('assessmentData.codingLevel')
-    .isIn(['none', 'basic', 'intermediate', 'advanced'])
-    .withMessage('Invalid coding level value'),
+  body('assessmentData.studyHabits')
+    .isIn(['casual', 'occasional', 'regular', 'intensive'])
+    .withMessage('Invalid study habits value'),
   body('assessmentData.dailyTimeAvailable')
     .isIn(['15-30min', '30-60min', '1-2hr', '2hr+'])
     .withMessage('Invalid daily time available value'),

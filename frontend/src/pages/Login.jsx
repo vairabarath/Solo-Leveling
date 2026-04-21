@@ -63,9 +63,8 @@ const Login = () => {
     setErrors({})
 
     try {
-      await login(formData.email, formData.password)
-      toast.success('Welcome back, Hunter!')
-      navigate('/dashboard')
+      const result = await login(formData.email, formData.password)
+      navigate(result.user.onboardingCompleted ? '/dashboard' : '/onboarding')
     } catch (error) {
       toast.error(error.message || 'Login failed')
     } finally {

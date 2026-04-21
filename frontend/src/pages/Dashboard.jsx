@@ -20,10 +20,7 @@ const Dashboard = () => {
     // Load daily quests and stats
     const loadData = async () => {
       try {
-        await Promise.all([
-          getDailyQuests(),
-          getCurrentStats()
-        ])
+        await getCurrentStats()
       } catch (error) {
         console.error('Failed to load dashboard data:', error)
       }

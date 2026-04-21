@@ -105,9 +105,9 @@ const userSchema = new mongoose.Schema({
       type: String,
       enum: ['beginner', 'occasional', 'regular', 'advanced']
     },
-    codingLevel: {
+    studyHabits: {
       type: String,
-      enum: ['none', 'basic', 'intermediate', 'advanced']
+      enum: ['casual', 'occasional', 'regular', 'intensive']
     },
     dailyTimeAvailable: {
       type: String,
@@ -206,7 +206,6 @@ const userSchema = new mongoose.Schema({
 });
 
 // Indexes
-userSchema.index({ email: 1 }, { unique: true });
 userSchema.index({ level: -1 });
 userSchema.index({ dailyQuestStreak: -1 });
 

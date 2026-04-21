@@ -227,8 +227,8 @@ const quests = [
   },
   // Advanced
   {
-    title: "1 Hour Coding Session",
-    description: "Code for 1 hour on a challenging project",
+    title: "1 Hour Deep Study Session",
+    description: "Spend 1 hour in deep focus studying a subject that challenges your intellect",
     category: "mental",
     difficulty: "advanced",
     tier: "advanced",
@@ -325,76 +325,57 @@ const quests = [
     estimatedTime: "120 minutes"
   },
 
-  // CAREER QUESTS
+  // NUTRITION QUESTS
   // Beginner
   {
-    title: "Update Resume",
-    description: "Update your resume with recent achievements",
-    category: "career",
+    title: "Track Daily Water Intake",
+    description: "Log and hit your daily water intake goal of at least 2 liters",
+    category: "nutrition",
     difficulty: "beginner",
     tier: "beginner",
-    intReward: 1,
+    vitReward: 2,
     senseReward: 1,
     xpReward: 15,
-    estimatedTime: "20-30 minutes"
-  },
-  {
-    title: "Learn Industry News",
-    description: "Read industry news for 15 minutes",
-    category: "career",
-    difficulty: "beginner",
-    tier: "beginner",
-    intReward: 1,
-    senseReward: 1,
-    xpReward: 10,
-    estimatedTime: "15 minutes"
+    estimatedTime: "Throughout the day"
   },
   // Intermediate
   {
-    title: "Network Outreach",
-    description: "Reach out to 3 professional contacts",
-    category: "career",
+    title: "Meal Prep for the Week",
+    description: "Prepare and portion healthy meals for the next 3-5 days",
+    category: "nutrition",
     difficulty: "intermediate",
     tier: "intermediate",
+    vitReward: 3,
     intReward: 2,
-    senseReward: 2,
-    xpReward: 25,
-    estimatedTime: "30 minutes"
-  },
-  {
-    title: "Skill Development",
-    description: "Spend 1 hour developing a professional skill",
-    category: "career",
-    difficulty: "intermediate",
-    tier: "intermediate",
-    intReward: 3,
-    senseReward: 2,
     xpReward: 30,
-    estimatedTime: "60 minutes"
+    estimatedTime: "90-120 minutes"
   },
   // Advanced
   {
-    title: "Project Leadership",
-    description: "Lead a project or initiative for 2 hours",
-    category: "career",
+    title: "Calculate and Hit Your Macros",
+    description: "Track and hit your protein, carb, and fat targets for an entire day",
+    category: "nutrition",
     difficulty: "advanced",
     tier: "advanced",
-    intReward: 4,
-    senseReward: 3,
+    vitReward: 4,
+    intReward: 3,
+    senseReward: 2,
     xpReward: 45,
-    estimatedTime: "120 minutes"
+    estimatedTime: "Throughout the day"
   },
   // Elite
   {
-    title: "Industry Presentation",
-    description: "Prepare and deliver a presentation to industry peers",
-    category: "career",
+    title: "Master Nutrition Periodization",
+    description: "Design and follow a nutrition periodization plan aligned with your training phases",
+    category: "nutrition",
     difficulty: "elite",
     tier: "elite",
-    intReward: 6,
-    senseReward: 4,
+    vitReward: 5,
+    intReward: 5,
+    senseReward: 3,
+    luckReward: 1,
     xpReward: 70,
-    estimatedTime: "180 minutes"
+    estimatedTime: "Ongoing protocol"
   }
 ];
 

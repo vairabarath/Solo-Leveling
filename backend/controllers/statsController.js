@@ -33,12 +33,12 @@ const getCurrentStats = async (req, res) => {
         currentMP: user.currentMP,
         maxMP: user.maxMP,
         mpProgress: Math.round((user.currentMP / user.maxMP) * 100),
-        strength: user.strength,
-        agility: user.agility,
-        vitality: user.vitality,
-        intelligence: user.intelligence,
-        sense: user.sense,
-        luck: user.luck,
+        strength: user.strength + (user.activeTitle?.strBonus || 0),
+        agility: user.agility + (user.activeTitle?.agiBonus || 0),
+        vitality: user.vitality + (user.activeTitle?.vitBonus || 0),
+        intelligence: user.intelligence + (user.activeTitle?.intBonus || 0),
+        sense: user.sense + (user.activeTitle?.senseBonus || 0),
+        luck: user.luck + (user.activeTitle?.luckBonus || 0),
         activeTitle: user.activeTitle ? {
           name: user.activeTitle.name,
           bonuses: {

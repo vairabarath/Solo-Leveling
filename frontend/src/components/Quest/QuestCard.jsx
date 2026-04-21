@@ -21,7 +21,7 @@ import QuestCompleteModal from './QuestCompleteModal'
 const QuestCard = ({ quest, isDaily = false, showRewards = false }) => {
   const [showCompleteModal, setShowCompleteModal] = useState(false)
   const { completeQuest } = useQuests()
-  const { updateStats } = useStats()
+  const { updateStats, getCurrentStats } = useStats()
 
   const getCategoryIcon = (category) => {
     switch (category) {
@@ -29,7 +29,7 @@ const QuestCard = ({ quest, isDaily = false, showRewards = false }) => {
       case 'cardio': return <Zap className="w-4 h-4" />
       case 'mental': return <Brain className="w-4 h-4" />
       case 'wellness': return <Heart className="w-4 h-4" />
-      case 'career': return <Award className="w-4 h-4" />
+      case 'nutrition': return <Heart className="w-4 h-4" />
       default: return <Target className="w-4 h-4" />
     }
   }
@@ -40,7 +40,7 @@ const QuestCard = ({ quest, isDaily = false, showRewards = false }) => {
       case 'cardio': return 'text-sl-blue'
       case 'mental': return 'text-sl-purple'
       case 'wellness': return 'text-sl-green'
-      case 'career': return 'text-sl-yellow'
+      case 'nutrition': return 'text-sl-orange'
       default: return 'text-gray-400'
     }
   }
@@ -72,13 +72,13 @@ const QuestCard = ({ quest, isDaily = false, showRewards = false }) => {
   const handleComplete = async () => {
     try {
       const result = await completeQuest(quest.questId)
-      
-      // Update stats if provided
-      if (result.data?.updatedUser) {
-        updateStats(result.data.updatedUser)
+
+      if (result?.updatedUser) {
+        updateStats(result.updatedUser)
       }
-      
+
       setShowCompleteModal(false)
+      getCurrentStats()
     } catch (error) {
       console.error('Failed to complete quest:', error)
     }

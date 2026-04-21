@@ -1,16 +1,19 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     if (!loading && !user) {
       navigate('/login')
+    } else if (!loading && user && !user.onboardingCompleted && location.pathname !== '/onboarding') {
+      navigate('/onboarding')
     }
-  }, [user, loading, navigate])
+  }, [user, loading, navigate, location.pathname])
 
   if (loading) {
     return (

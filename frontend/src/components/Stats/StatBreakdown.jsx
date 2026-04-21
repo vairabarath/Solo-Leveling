@@ -19,7 +19,7 @@ const StatBreakdown = ({ data }) => {
     cardio: '#00d4ff',
     mental: '#8b5cf6',
     wellness: '#00ff40',
-    career: '#ffd700'
+    nutrition: '#f97316'
   }
 
   const categoryNames = {
@@ -27,7 +27,7 @@ const StatBreakdown = ({ data }) => {
     cardio: 'Cardio',
     mental: 'Mental',
     wellness: 'Wellness',
-    career: 'Career'
+    nutrition: 'Nutrition'
   }
 
   // Prepare data for pie chart

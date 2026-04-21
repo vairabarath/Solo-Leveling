@@ -20,9 +20,9 @@ const calculateInitialStats = (assessmentData) => {
   // Mental capacity bonuses
   const focusBonus = getFocusBonus(assessmentData.focusCapacity);
   const learningBonus = getLearningBonus(assessmentData.learningLevel);
-  const codingBonus = getCodingBonus(assessmentData.codingLevel);
+  const studyHabitsBonus = getStudyHabitsBonus(assessmentData.studyHabits);
 
-  intelligence += focusBonus + learningBonus + codingBonus;
+  intelligence += focusBonus + learningBonus + studyHabitsBonus;
   sense += focusBonus + learningBonus;
 
   // Lifestyle bonuses
@@ -79,8 +79,8 @@ const getLearningBonus = (level) => {
   return bonuses[level] || 0;
 };
 
-const getCodingBonus = (level) => {
-  const bonuses = { 'none': 0, 'basic': 1, 'intermediate': 3, 'advanced': 5 };
+const getStudyHabitsBonus = (level) => {
+  const bonuses = { 'casual': 0, 'occasional': 1, 'regular': 3, 'intensive': 5 };
   return bonuses[level] || 0;
 };
 

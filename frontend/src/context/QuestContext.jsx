@@ -48,6 +48,7 @@ const questReducer = (state, action) => {
     case 'UPDATE_QUEST_STATUS':
       return {
         ...state,
+        loading: false,
         dailyQuests: state.dailyQuests.map(quest =>
           quest.questId === action.payload.questId
             ? { ...quest, isCompleted: true, completedAt: new Date() }

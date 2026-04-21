@@ -18,19 +18,57 @@ const {
 const getDailyQuests = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const User = require("../models/User");
+
+    const user = await User.findById(userId);
+    if (!user || !user.onboardingCompleted) {
+      return res.status(400).json({
+        success: false,
+        message: "User must complete onboarding first",
+      });
+    }
+
+    // Streak breaking + HP punishment for missed previous day
+    const now = new Date();
+    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+    const yesterdayStart = new Date(todayStart); yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+
+    let userModified = false;
+    let hpPunishment = null;
+
+    if (user.lastQuestDate) {
+      const lastDay = new Date(user.lastQuestDate); lastDay.setHours(0, 0, 0, 0);
+      const dayDiff = Math.round((todayStart - lastDay) / 86400000);
+
+      if (dayDiff > 1) {
+        user.dailyQuestStreak = 0;
+        userModified = true;
+      }
+
+      if (dayDiff === 1) {
+        const yesterdayAssignment = await DailyQuestAssignment.findOne({
+          userId,
+          assignedDate: { $gte: yesterdayStart, $lt: todayStart },
+        });
+        if (yesterdayAssignment) {
+          const incompleteCount = yesterdayAssignment.quests.filter((q) => !q.isCompleted).length;
+          if (incompleteCount > 0) {
+            user.dailyQuestStreak = 0;
+            const hpPenalty = incompleteCount * 10;
+            const hpLost = Math.min(hpPenalty, user.currentHP - 1);
+            user.currentHP = Math.max(1, user.currentHP - hpPenalty);
+            hpPunishment = { incompleteQuests: incompleteCount, hpLost };
+            userModified = true;
+          }
+        }
+      }
+    }
+
+    if (userModified) await user.save();
 
     // Check if user needs new daily quests
     const needsNew = await needsNewDailyQuests(userId);
     if (needsNew) {
-      // Generate new daily quests
-      const user = await require("../models/User").findById(userId);
-      if (!user || !user.onboardingCompleted) {
-        return res.status(400).json({
-          success: false,
-          message: "User must complete onboarding first",
-        });
-      }
-
       await generateDailyQuests(userId, user.questTiers);
     }
 
@@ -60,15 +98,15 @@ const getDailyQuests = async (req, res) => {
     }));
 
     // Calculate time remaining
-    const now = new Date();
-    const tomorrow = new Date(now);
+    const tomorrow = new Date(todayStart);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
     const timeRemaining = tomorrow - now;
     const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
     const minutes = Math.floor(
       (timeRemaining % (1000 * 60 * 60)) / (1000 * 60),
     );
+
+    const freshUser = await User.findById(userId);
 
     res.status(200).json({
       success: true,
@@ -78,8 +116,10 @@ const getDailyQuests = async (req, res) => {
         completedCount: assignment.completedCount,
         totalQuests: 4,
         allCompleted: assignment.allCompleted,
-        streak: (await require("../models/User").findById(userId))
-          .dailyQuestStreak,
+        streak: freshUser.dailyQuestStreak,
+        currentHP: freshUser.currentHP,
+        maxHP: freshUser.maxHP,
+        hpPunishment,
         timeRemaining: `${hours}h ${minutes}m`,
       },
     });
@@ -263,7 +303,7 @@ const completeQuest = async (req, res) => {
 
     await completedQuest.save();
 
-    // Update user's quest completion count
+    // Update user's quest completion count and activity date
     const user = await require("../models/User").findById(userId);
     user.totalQuestsCompleted += 1;
     user.lastQuestDate = new Date();
@@ -289,6 +329,14 @@ const completeQuest = async (req, res) => {
           completed: assignment.completedCount,
           total: 4,
         };
+
+        // Increment streak when all daily quests are done
+        if (assignment.allCompleted) {
+          const streakUser = await require("../models/User").findById(userId);
+          streakUser.dailyQuestStreak += 1;
+          streakUser.lastQuestDate = new Date();
+          await streakUser.save();
+        }
       }
     }
 
